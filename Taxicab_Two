@@ -1,0 +1,99 @@
+class Taxicab_Two():
+    """
+    The code defines a class Taxicab_Two that generates and prints a specified number of Ramanujan numbers, which
+    are sums of two cubes in more than one way.
+    """
+    def __init__(self, number_of_ramanujan_numbers):
+        self.number_of_ramanujan_numbers = number_of_ramanujan_numbers
+    
+    def HN_hub(self):
+        """
+        The `HN_hub` function initializes values, calculates cubed sums, and prints 2-way Ramanujan
+        solutions.
+        """
+        self.initialize_values()
+        self.nth_numbers = 0
+        self.get_cubed_sums_list()
+        print("Found 2-way Ramanujan Solutions (Taxi-cab numbers: sums of 2 cubes in more than 1 way):")
+        for i in range(0, len(self.RamanujanNumber)):
+            print(str(i+1)+": "+str(self.RamanujanNumber[i])+": "+str(self.RamanujanNumber_n1[i])+": "+str(self.RamanujanNumber_n2[i]))
+        
+    def get_cubed_sums_list(self):
+        """
+        The function `get_cubed_sums_list` calculates the sum of cubes for a range of numbers and checks for
+        duplicates to find Ramanujan numbers.
+        :return: The code is returning nothing (`None`) if the length of `self.RamanujanNumber` is equal to
+        `self.number_of_ramanujan_numbers`.
+        """
+        self.nth_numbers+=10
+        for i in range(self.x_n,self.nth_numbers):
+            self.y_n+=1
+            for j in range(self.y_n,self.nth_numbers):
+                self.cubed_sum_number_tracker.append(i**3+j**3)
+                self.number_tracker.append([i,j])
+        self.check_for_duplicates()
+        if len(self.RamanujanNumber)==self.number_of_ramanujan_numbers:
+            return
+        
+    def check_for_duplicates(self):
+        """
+        The function `check_for_duplicates` sorts a list, checks for duplicates, and adjusts the Ramanujan
+        numbers based on a specified count.
+        :return: nothing (None) if the condition
+        `len(self.RamanujanNumber)==self.number_of_ramanujan_numbers` is met.
+        """
+        self.sorted_number_list = sorted(self.cubed_sum_number_tracker)
+        for i in range(0,len(self.sorted_number_list)-2):
+            if self.sorted_number_list[i]==self.sorted_number_list[i+1]:
+                self.check_result(self.sorted_number_list[i])
+        if len(self.RamanujanNumber)<self.number_of_ramanujan_numbers:
+            self.initialize_values()
+        elif len(self.RamanujanNumber)>self.number_of_ramanujan_numbers:
+            self.RamanujanNumber = self.RamanujanNumber[0:self.number_of_ramanujan_numbers]
+            self.RamanujanNumber_n1 = self.RamanujanNumber_n1[0:self.number_of_ramanujan_numbers]
+            self.RamanujanNumber_n2 = self.RamanujanNumber_n2[0:self.number_of_ramanujan_numbers]
+        if len(self.RamanujanNumber)==self.number_of_ramanujan_numbers:
+            return
+        self.get_cubed_sums_list()
+            
+    def check_result(self,number):
+        """
+        The function `check_result` iterates through a list to find occurrences of a given number and
+        appends them to different lists if certain conditions are met.
+        
+        :param number: It looks like the code you provided is a method that checks for a specific condition
+        related to Ramanujan numbers. The `check_result` method takes a `number` as input and then iterates
+        through `self.cubed_sum_number_tracker` to find occurrences of that number. It then
+        """
+        first_occurrence = []
+        second_occurrence = []
+        for i in range(0,len(self.cubed_sum_number_tracker)):
+            if self.cubed_sum_number_tracker[i] == number:
+                if not first_occurrence:
+                    first_occurrence = self.number_tracker[i]
+                    continue
+                if not second_occurrence:
+                    second_occurrence = self.number_tracker[i]
+        if not first_occurrence==second_occurrence or not first_occurrence.reverse()==second_occurrence:
+            self.RamanujanNumber.append(number)
+            self.RamanujanNumber_n1.append(first_occurrence)
+            self.RamanujanNumber_n2.append(second_occurrence)
+            
+    def initialize_values(self):
+        """
+        The `initialize_values` function initializes various lists and variables used in a program related
+        to Ramanujan numbers.
+        """
+        self.RamanujanNumber = []
+        self.RamanujanNumber_n1 = []
+        self.RamanujanNumber_n2 = []
+        self.cubed_sum_number_tracker = []
+        self.sorted_number_list = []
+        self.number_tracker = []
+        self.x_n = 1
+        self.y_n = 1
+def main():
+    result = Taxicab_Two(300)
+    result.HN_hub()
+if __name__ == '__main__':
+    main()  
